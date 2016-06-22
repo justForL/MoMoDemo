@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MainNavigationController.h
 //  MoMoDemo
 //
 //  Created by James on 16/6/21.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MainNavigationController : UINavigationController
 
 @end
-
