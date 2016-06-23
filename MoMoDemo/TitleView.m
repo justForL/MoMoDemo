@@ -11,6 +11,7 @@
 @interface TitleView ()
 @property (nonatomic, strong) NSArray *titleArray;
 @property (nonatomic, strong) UIView *moveView;
+@property (nonatomic, assign) CGFloat lastFlag;
 
 @end
 @implementation TitleView
@@ -47,20 +48,30 @@
 
 - (void)tapLabelAction:(UITapGestureRecognizer *)recognizer {
     UILabel *label = (UILabel *)recognizer.view;
-    [UIView animateWithDuration:0.25 animations:^{
-        self.moveView.center = CGPointMake(label.center.x, self.bounds.size.height-2);
-    }];
+//    [UIView animateWithDuration:0.25 animations:^{
+//        self.moveView.center = CGPointMake(label.center.x, self.bounds.size.height-2);
+//    }];
     if ([self.delegate respondsToSelector:@selector(titleView:index:)]) {
         [self.delegate titleView:self index:label.tag];
     }
 }
 - (void)setOffset:(CGFloat)offset {
     _offset = offset;
-    NSNumber *number = [NSNumber numberWithFloat:offset];
+    CGFloat index = offset / [UIScreen mainScreen].bounds.size.width;
+    NSNumber *number = [NSNumber numberWithFloat:index];
     UILabel *label = self.subviews[[number integerValue]];
+    
+    if (offset > self.lastFlag) {
+       label.textColor = [UIColor colorWithRed:0 green:0 blue:index alpha:1];
+    }else {
+        
+    }
+    
+
     [UIView animateWithDuration:0.25 animations:^{
-        self.moveView.center = CGPointMake(label.center.x, self.bounds.size.height-2);
+        self.moveView.center = CGPointMake(label.center.x , self.bounds.size.height-2);
     }];
+    self.lastFlag = offset;
 
     
     

@@ -36,14 +36,20 @@ static NSString *ID = @"collectionViewId";
 }
 
 - (void)titleView:(TitleView *)titleView index:(NSInteger)index {
-    [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathWithIndex:index] animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    NSLog(@"%zd",index);
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+
+    
 }
 
 #pragma mark - scrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.titleView.offset = scrollView.contentOffset.x / [UIScreen mainScreen].bounds.size.width;
+    self.titleView.offset = scrollView.contentOffset.x;
 }
 #pragma mark - collectionViewDelegate
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 3;
 }
