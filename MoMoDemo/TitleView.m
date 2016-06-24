@@ -60,13 +60,24 @@
     CGFloat index = offset / [UIScreen mainScreen].bounds.size.width;
     NSNumber *number = [NSNumber numberWithFloat:index];
     UILabel *label = self.subviews[[number integerValue]];
-    
-    if (offset > self.lastFlag) {
-       label.textColor = [UIColor colorWithRed:0 green:0 blue:index alpha:1];
-    }else {
+    //判断左划还是右划(左右划 是针对于屏幕来说 手指是相反方向)
+        if (offset >self.lastFlag) {
+        NSLog(@"right");
         
+    }else {
+        NSLog(@"left");
     }
-    
+    //判断当前label 文字设置为蓝色,其它设置为黑色
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            UILabel *currentLabel = (UILabel *)view;
+            if (currentLabel == label) {
+                currentLabel.textColor = [UIColor colorWithRed:0 green:0 blue:index == 0? 1 : index alpha:1];
+            }else {
+                currentLabel.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+            }
+        }
+    }
 
     [UIView animateWithDuration:0.25 animations:^{
         self.moveView.center = CGPointMake(label.center.x , self.bounds.size.height-2);
